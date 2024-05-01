@@ -2,7 +2,7 @@ package pl.projekt.tui.component;
 
 
 
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 
 /**
  * Klasa do tworzenia etykiet.
@@ -10,7 +10,7 @@ import pl.projekt.tui.model.color.ANSIColors;
 public class TUILabel implements TUIComponent {
 
     private String text;
-    private String textColor = ANSIColors.TEXT_WHITE.getCode();
+    private String textColor = Colors.TEXT_BLACK.getCode();
     private String bgColor;
     private int x, y, w, h, zIndex;
     private TUIManager screenManager;

@@ -1,7 +1,6 @@
 package pl.projekt.tui.component;
 
-import pl.projekt.tui.component.*;
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 
 
 public class TUIScrollBar implements TUIComponent {
@@ -22,7 +21,7 @@ public class TUIScrollBar implements TUIComponent {
         // Rysuj suwak jako prostokątny obszar
         for (int y = 0; y < scrollBarHeight; y++) {
             for (int x = 0; x < scrollBarWidth; x++) {
-                TUIManager.getScreen().addPixelToLayer(scrollBarX + x, scrollBarY + y, 0, new TUIScreenCell('|', ANSIColors.TEXT_WHITE.getCode(), ANSIColors.BG_BRIGHT_BLUE.getCode()));
+                TUIManager.getScreen().addPixelToLayer(scrollBarX + x, scrollBarY + y, 0, new TUIScreenCell('|', Colors.TEXT_WHITE.getCode(), Colors.BG_BRIGHT_BLUE.getCode()));
             }
         }
     }

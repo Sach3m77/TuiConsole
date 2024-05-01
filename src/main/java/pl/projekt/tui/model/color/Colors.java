@@ -6,7 +6,7 @@ import lombok.Getter;
  * Kody kolorów tekstu oraz tła.
  */
 @Getter
-public enum ANSIColors {
+public enum Colors {
 
     /**
      * Tekst czarny.
@@ -152,7 +152,7 @@ public enum ANSIColors {
      * Domyślny konstruktor
      * @param code Kolor.
      */
-    ANSIColors(String code) {
+    Colors(String code) {
         this.code = code;
     }
 

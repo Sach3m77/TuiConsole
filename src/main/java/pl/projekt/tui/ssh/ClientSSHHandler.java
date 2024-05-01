@@ -10,8 +10,7 @@ import org.apache.sshd.server.command.Command;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.projekt.tui.component.*;
-import pl.projekt.tui.logic.ProcessListUpdater;
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -35,70 +34,108 @@ public class ClientSSHHandler implements Command {
         tuiScreen = new TUIScreen(ScreenWidth, ScreenHeight);
     }
 
+
+
+    /*
+    |--------------------------------------------------------|
+    |PRZYCISK MOZNA DODAC DO GENEROWANIA RAPORTÓW FINANSOWYCH|
+    |--------------------------------------------------------|
+     */
+
     public void init() {
         try {
             tuiScreen.addLayer(0);
             tuiScreen.addLayer(1);
             tuiScreen.addLayer(2);
             tuiScreen.addLayer(3);
-            tuiScreen.setBgColor(ANSIColors.BG_BRIGHT_BLACK.getCode(), 0);
-            TUITab op1 = new TUITab("F1 Process manager", 0, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
-            TUITab op2 = new TUITab("F2 Information", 20, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
-            TUITab op3 = new TUITab("F3 Search", 30, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
-            TUITab op4 = new TUITab("F4 Filter", 40, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
-            TUITab op5 = new TUITab("F5 Sort By", 50, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
-            TUITab op6 = new TUITab("F6 Quick", 60, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tuiScreen.setBgColor(Colors.BG_BRIGHT_YELLOW.getCode(), 0);
+            TUITab op1 = new TUITab("F1 Main Page", 0, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            TUITab op2 = new TUITab("F2 Credit calculator", 20, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            TUITab op3 = new TUITab("F3 Savings calculator", 40, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            TUITab op4 = new TUITab("F4 Investment calculator", 60, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            TUITab op5 = new TUITab("F5 Currency converter", 80, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            TUITab op6 = new TUITab("F6 Tax calculator", 100, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            TUITab op7 = new TUITab("F7 Pension calculator", 120, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+
             TUIManager.addTab(op1);
             TUIManager.addTab(op2);
             TUIManager.addTab(op3);
             TUIManager.addTab(op4);
             TUIManager.addTab(op5);
             TUIManager.addTab(op6);
-            ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-            scheduler.scheduleAtFixedRate(() -> {
-                try {
-                    List<List<String>> processData = ProcessListUpdater.getProcessData();
-                    List<String> newLabels = processData.get(0);
-                    processData.remove(0);
-                    List<String> rowData = new ArrayList<>();
-                    for (List<String> row : processData) {
-                        rowData.addAll(row);
-                    }
-                    TUITabela newTable = new TUITabela(10, 7, 100, 10, 0, TUIManager, newLabels, rowData);
-                    newTable.setVisibleRows(Math.min(10, processData.size()));
-                    newTable.drawAllHeaders(op1);
-                    newTable.drawAllRows(op1);
-                    if (processData.size() > 10) {
-                        TUIScrollBar scrollBar = new TUIScrollBar(newTable);
-                        op1.addComponent(scrollBar);
-                    }
-                    op1.removeComponent(newTable);
-                    op1.addComponent(newTable);
-                    TUIManager.addTab(op1);
-                    TUIManager.initialize();
-                    TUIManager.refresh();
-                } catch (Exception e) {
-                    logger.error("Błąd aktualizacji tabeli: " + e.getMessage());
-                    e.printStackTrace();
-                }
-            }, 0, 10, TimeUnit.SECONDS);
-            int availableProcessors = ProcessListUpdater.getAvailableProcessors();
-            TUILabel labelCores = new TUILabel("Available Processors: " + availableProcessors, 0, 3, 0, ANSIColors.BG_BRIGHT_BLACK.getCode(), TUIManager);
-            op2.addComponent(labelCores);
-            String cpuTemperature = "CPU Temperature: ";
-            TUILabel labelCPUTemperature = new TUILabel(cpuTemperature, 0, 4, 0, ANSIColors.BG_BRIGHT_BLACK.getCode(), TUIManager);
-            op2.addComponent(labelCPUTemperature);
-            String cpuSpeed = "CPU Speed: ";
-            TUILabel labelCPUSpeed = new TUILabel(cpuSpeed, 0, 5, 0, ANSIColors.BG_BRIGHT_BLACK.getCode(), TUIManager);
-            op2.addComponent(labelCPUSpeed);
-            String memoryUsage = "Memory Usage: ";
-            TUILabel labelMemoryUsage = new TUILabel(memoryUsage, 0, 6, 0, ANSIColors.BG_BRIGHT_BLACK.getCode(), TUIManager);
-            op2.addComponent(labelMemoryUsage);
+
+
+            TUILabel labelProjectTitle = new TUILabel("TUI Financial Calculator: ", 50, 2, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelProjectTitle);
+
+            TUILabel labelSubjectTitle = new TUILabel("Programing Defence ", 50, 3, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelSubjectTitle);
+
+            TUILabel labelOptions = new TUILabel("Options: ", 0, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOptions);
+
+            TUILabel labelOption1 = new TUILabel("-Credit calculator: Calculate the amount of the monthly loan installment based on the loan amount, \n interest rate and repayment period.", 5, 7, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOption1);
+            TUILabel labelOption2 = new TUILabel("-Savings calculator: Calculate the future value of your savings based on regular payments, interest rate and savings period.", 5, 9, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOption2);
+            TUILabel labelOption3 = new TUILabel("-Investment calculator: Calculate potential ROI based on initial capital, investment period and expected ROI.", 5, 11, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOption3);
+            TUILabel labelOption4 = new TUILabel("-Currency converter: Convert amounts between different currencies based on current exchange rates.", 5, 13, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOption4);
+            TUILabel labelOption5 = new TUILabel("-Tax calculator: Calculate your income tax amount based on your income and applicable tax rates.", 5, 15, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOption5);
+            TUILabel labelOption6 = new TUILabel("-Pension calculator: Calculate the future value of your pension based on your current age, \n planned savings and expected retirement age.", 5, 17, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op1.addComponent(labelOption6);
+
+            TUILabel labelAmountOfCredit = new TUILabel("Amount of credit:", 50, 5, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op2.addComponent(labelAmountOfCredit);
+            TUILabel labelLoanInterestRate = new TUILabel("Loan interest rate (annual):", 50, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op2.addComponent(labelLoanInterestRate);
+            TUILabel labelLoanRepaymentPeriod  = new TUILabel("Loan repayment period (in years):", 50, 7, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op2.addComponent(labelLoanRepaymentPeriod);
+
+            TUILabel labelRegularPayments  = new TUILabel("Regular payments (monthly):", 50, 5, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op3.addComponent(labelRegularPayments);
+            TUILabel labelSavingsInterestRate = new TUILabel("Savings interest rate (annual):", 50, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op3.addComponent(labelSavingsInterestRate);
+            TUILabel labelSavingPeriod  = new TUILabel("Saving period (in years):", 50, 7, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op3.addComponent(labelSavingPeriod);
+
+            TUILabel labelInitialInvestmentCapital  = new TUILabel("Initial investment capital:", 50, 5, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op4.addComponent(labelInitialInvestmentCapital);
+            TUILabel labelInvestmentPeriod = new TUILabel("Investment period (in years):", 50, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op4.addComponent(labelInvestmentPeriod);
+            TUILabel labelExpectedRateOfReturnOnInvestment  = new TUILabel("Expected rate of return on investment (annual):", 50, 7, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op4.addComponent(labelExpectedRateOfReturnOnInvestment);
+
+
+            TUILabel labelAmountToBeConvertedl  = new TUILabel("Amount to be converted:", 50, 5, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op5.addComponent(labelAmountToBeConvertedl);
+            TUILabel labelSelectingTheSourceCurrency = new TUILabel("Selecting the source currency:", 50, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op5.addComponent(labelSelectingTheSourceCurrency);
+            TUILabel labelSelectingTheTargetCurrency  = new TUILabel("Selecting the target currency:", 50, 7, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op5.addComponent(labelSelectingTheTargetCurrency);
+
+            TUILabel labelAnnualIncome  = new TUILabel("Annual income:", 50, 5, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op6.addComponent(labelAnnualIncome);
+            TUILabel labelTaxRatesApplied = new TUILabel("Tax rates applied:", 50, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op6.addComponent(labelTaxRatesApplied);
+
+            TUILabel labelCurrentAge  = new TUILabel("Current age:", 50, 5, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op7.addComponent(labelCurrentAge);
+            TUILabel labelPlannedSavingsForRetirement = new TUILabel("Planned savings for retirement (annual):", 50, 6, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op7.addComponent(labelPlannedSavingsForRetirement);
+            TUILabel labelExpectedRetirementAge  = new TUILabel("Expected retirement age:", 50, 7, 0, Colors.BG_BRIGHT_YELLOW.getCode(), TUIManager);
+            op7.addComponent(labelExpectedRetirementAge);
+
+            TUIManager.addTab(op1);
             TUIManager.addTab(op2);
             TUIManager.addTab(op3);
             TUIManager.addTab(op4);
             TUIManager.addTab(op5);
             TUIManager.addTab(op6);
+            TUIManager.addTab(op7);
+
             TUIManager.initialize();
         } catch (Exception e) {
             logger.error("Błąd inicjalizacji: " + e.getMessage());

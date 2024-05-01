@@ -3,7 +3,7 @@ package pl.projekt.tui.component;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 
 
 import java.util.ArrayList;
@@ -16,8 +16,8 @@ public class TUITab implements TUIComponent {
 
     Logger logger = LoggerFactory.getLogger(TUITab.class);
     private String title;
-    private String textColor = ANSIColors.TEXT_WHITE.getCode();
-    private String bgColor = ANSIColors.BG_BRIGHT_BLUE.getCode();
+    private String textColor = Colors.TEXT_BLACK.getCode();
+    private String bgColor = Colors.BG_BRIGHT_WHITE.getCode();
 
     private String tabColor = "\033[33m";
     private List<TUIComponent> components = new ArrayList<>();
@@ -152,7 +152,7 @@ public class TUITab implements TUIComponent {
 
     @Override
     public void highlight() {
-        textColor = ANSIColors.TEXT_RED.getCode();
+        textColor = Colors.TEXT_RED.getCode();
         active = true;
 
         TUIManager.refresh();
@@ -160,7 +160,7 @@ public class TUITab implements TUIComponent {
     }
     @Override
     public void resetHighlight() {
-        textColor = ANSIColors.TEXT_WHITE.getCode();
+        textColor = Colors.TEXT_WHITE.getCode();
         active = false;
 
         TUIManager.refresh();

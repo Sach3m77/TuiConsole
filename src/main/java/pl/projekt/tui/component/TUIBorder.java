@@ -1,7 +1,7 @@
 package pl.projekt.tui.component;
 
 import org.slf4j.Logger;
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 
 public class TUIBorder implements TUIComponent {
 
@@ -29,8 +29,8 @@ public class TUIBorder implements TUIComponent {
     private int x, y, width, height;
     private final int initialH, initialW;
     private int zIndex;
-    private String bgColor = ANSIColors.BG_BLUE.getCode();
-    private String textColor = ANSIColors.TEXT_WHITE.getCode();
+    private String bgColor = Colors.BG_BLUE.getCode();
+    private String textColor = Colors.TEXT_BLACK.getCode();
 
     private String textContent;
 
@@ -65,7 +65,7 @@ public class TUIBorder implements TUIComponent {
     }
 
     public void setTextInBorder(TUITab uiTab) {
-        TUILabel label = new TUILabel(this.textContent, this.x + 3, this.y + 1, 0, ANSIColors.BG_BRIGHT_BLUE.getCode(), TUIManager);
+        TUILabel label = new TUILabel(this.textContent, this.x + 3, this.y + 1, 0, Colors.BG_BRIGHT_BLUE.getCode(), TUIManager);
         uiTab.addComponent(label);
     }
 

@@ -2,7 +2,7 @@ package pl.projekt.tui.component;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -133,7 +133,7 @@ public class TUIScreen {
         logger.trace("Clearing screen");
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                mergedLayer[i][j] = new TUIScreenCell(' ', ANSIColors.TEXT_WHITE.getCode(), ANSIColors.BG_WHITE.getCode());
+                mergedLayer[i][j] = new TUIScreenCell(' ', Colors.TEXT_WHITE.getCode(), Colors.BG_WHITE.getCode());
             }
         }
     }
@@ -175,7 +175,7 @@ public class TUIScreen {
             for (int j = 0; j < width; j++) {
                 if (targetLayer[i][j] == null) {
                     // logger.trace("Setting background color at ({}, {})", j, i);
-                    targetLayer[i][j] = new TUIScreenCell(' ', ANSIColors.TEXT_BLACK.getCode(), bgColor);
+                    targetLayer[i][j] = new TUIScreenCell(' ', Colors.TEXT_BLACK.getCode(), bgColor);
                 } else {
                     // logger.trace("Setting background color at ({}, {})", j, i);
                     targetLayer[i][j].setBgColor(bgColor);

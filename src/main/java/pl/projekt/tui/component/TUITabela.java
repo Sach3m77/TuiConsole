@@ -4,7 +4,7 @@ package pl.projekt.tui.component;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import pl.projekt.tui.model.color.ANSIColors;
+import pl.projekt.tui.model.color.Colors;
 
 
 import java.util.List;
@@ -15,8 +15,8 @@ public class TUITabela implements TUIComponent {
 
     private StringBuilder textContent;
     private int x, y, width, height;
-    private String bgColor = ANSIColors.BG_RED.getCode();
-    private String textColor = ANSIColors.TEXT_WHITE.getCode();
+    private String bgColor = Colors.BG_RED.getCode();
+    private String textColor = Colors.TEXT_BLACK.getCode();
     private boolean isNumeric, isPassword;
     private Pattern regexPattern = null;
     private int zIndex;
@@ -51,7 +51,7 @@ public class TUITabela implements TUIComponent {
         int xPosition = this.x + 3;
         System.out.println(this.newLabels);
         for (String label : this.newLabels) {
-            TUILabel labelObject = new TUILabel(label, xPosition, this.y -3 , 0, ANSIColors.BG_BRIGHT_BLUE.getCode(), TUIManager);
+            TUILabel labelObject = new TUILabel(label, xPosition, this.y -3 , 0, Colors.BG_BRIGHT_BLUE.getCode(), TUIManager);
             xPosition += (this.width / this.newLabels.size()) + 3;
             uiTab.addComponent(labelObject);
         }
@@ -73,8 +73,8 @@ public class TUITabela implements TUIComponent {
             TUIBorder border = new TUIBorder(startingX, startingY, this.width / 3 + 2, 3 , 0, TUIManager, rowContent);
             count++;
             border.setTextInBorder(uiTab);
-            border.setTextColor(ANSIColors.TEXT_WHITE.getCode());
-            border.setBgColor(ANSIColors.BG_BRIGHT_BLUE.getCode());
+            border.setTextColor(Colors.TEXT_BLACK.getCode());
+            border.setBgColor(Colors.BG_BRIGHT_BLUE.getCode());
             startingX += this.width / 3 + 2;
             uiTab.addComponent(border);
         }
@@ -169,16 +169,16 @@ public class TUITabela implements TUIComponent {
     @Override
     public void highlight() {
 
-        setBgColor(ANSIColors.BG_YELLOW.getCode());
-        setTextColor(ANSIColors.TEXT_BLACK.getCode());
+        setBgColor(Colors.BG_YELLOW.getCode());
+        setTextColor(Colors.TEXT_BLACK.getCode());
 
         TUIManager.refresh();
     }
 
     @Override
     public void resetHighlight() {
-        setBgColor(ANSIColors.BG_RED.getCode());
-        setTextColor(ANSIColors.TEXT_WHITE.getCode());
+        setBgColor(Colors.BG_RED.getCode());
+        setTextColor(Colors.TEXT_WHITE.getCode());
 
         TUIManager.refresh();
     }

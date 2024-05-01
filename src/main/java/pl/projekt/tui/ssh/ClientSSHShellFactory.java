@@ -11,7 +11,7 @@ class ClientSSHShellFactory implements ShellFactory {
     /**
      * Creates a new SSH session.
      * @param channel ChannelSession channel.
-     * @return A new instance of <i>MySSHClientHandler</i>.
+     * @return A new instance of <i>ClientSSHHandler</i>.
      */
     @Override
     public Command createShell(ChannelSession channel) {
