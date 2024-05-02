@@ -6,16 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3b7e6e6e-9821-4f23-bb02-9c4be2a8cd78" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIBorder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIBorder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUILabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUILabel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScrollBar.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScrollBar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITab.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITabela.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITabela.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/logic/ProcessListUpdater.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/logic/ProcessListUpdater.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/color/ANSIColors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/color/Colors.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHShellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHShellFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +79,8 @@
       <workItem from="1714302075436" duration="11324000" />
       <workItem from="1714378663581" duration="2310000" />
       <workItem from="1714383944853" duration="10377000" />
-      <workItem from="1714564228641" duration="13817000" />
+      <workItem from="1714564228641" duration="14666000" />
+      <workItem from="1714628160057" duration="5881000" />
     </task>
     <servers />
   </component>

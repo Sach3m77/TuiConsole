@@ -160,7 +160,7 @@ public class TUITab implements TUIComponent {
     }
     @Override
     public void resetHighlight() {
-        textColor = Colors.TEXT_WHITE.getCode();
+        textColor = Colors.TEXT_BLACK.getCode();
         active = false;
 
         TUIManager.refresh();
@@ -229,4 +229,6 @@ public class TUITab implements TUIComponent {
         for(TUIComponent component : components)
             component.windowResized(width, height);
     }
+
+
 }

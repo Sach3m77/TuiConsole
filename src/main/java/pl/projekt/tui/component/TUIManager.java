@@ -4,12 +4,12 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import pl.projekt.tui.model.keys.KeyInfo;
 
 
+import java.awt.event.KeyEvent;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 
 
 /**
@@ -35,6 +35,8 @@ public class TUIManager {
     private int currentTab = 0;
 
     private boolean shouldRefresh;
+
+    private final Map<Integer, String> functionKeysMap = new HashMap<>();
 
 
     /**
@@ -138,32 +140,6 @@ public class TUIManager {
 
 
     /**
-     * Switches to the next tab.
-     */
-    private void moveToNextTab() {
-        if (!tabs.isEmpty()) {
-            tabs.get(currentTab).setActive(false);
-            screen.clearLayers();
-            currentTab = (currentTab + 1) % tabs.size();
-            tabs.get(currentTab).setActive(true);
-        }
-
-    }
-
-    /**
-     * Switches to the previous tab.
-     */
-    private void moveToPrevTab() {
-        if (!tabs.isEmpty()) {
-            tabs.get(currentTab).setActive(false);
-            screen.clearLayers();
-            currentTab -= 1;
-            if (currentTab < 0) currentTab = tabs.size() - 1;
-            tabs.get(currentTab).setActive(true);
-        }
-    }
-
-    /**
      * Supports changing window dimensions (remote).
      * @param width The new width of the window.
      * @param height The new height of the window.
@@ -188,6 +164,56 @@ public class TUIManager {
     @SneakyThrows
     public void refresh() {
         this.shouldRefresh = true;
+    }
+
+
+        /**
+     * Obsługuje klawiaturę.
+     * @param keyInfo Informacja o wciśniętym klawiszu.
+     */
+        public void handleKeyboardInput(KeyInfo keyInfo, List<TUITab> tabs) {
+            logger.trace("Handling keyboard input: " + keyInfo);
+
+            if (!tabs.isEmpty()) {
+                switch (keyInfo.getLabel()) {
+                    case F1:
+                        switchToTab(tabs, 0);
+                        break;
+                    case F2:
+                        switchToTab(tabs, 1);
+                        break;
+                    case F3:
+                        switchToTab(tabs, 2);
+                        break;
+                    case F4:
+                        switchToTab(tabs, 3);
+                        break;
+                    case F5:
+                        switchToTab(tabs, 4);
+                        break;
+                    case F6:
+                        switchToTab(tabs, 5);
+                        break;
+                    case F7:
+                        switchToTab(tabs, 6);
+                        break;
+                    default:
+                        // Handle other keys if needed
+                        break;
+                }
+            }
+
+            if (shouldRefresh)
+                this.render();
+        }
+
+    private void switchToTab(List<TUITab> tabs, int tabIndex) {
+        if (tabIndex >= 0 && tabIndex < tabs.size()) {
+            tabs.get(currentTab).setActive(false);
+            screen.clearLayers();
+            currentTab = tabIndex;
+            tabs.get(currentTab).setActive(true);
+        }
     }
 
 

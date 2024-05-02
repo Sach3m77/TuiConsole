@@ -11,6 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.projekt.tui.component.*;
 import pl.projekt.tui.model.color.Colors;
+import pl.projekt.tui.model.keys.KeyInfo;
+import pl.projekt.tui.model.keys.KeyLabel;
+import pl.projekt.tui.model.keys.KeyboardHandler;
+
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
@@ -18,6 +23,7 @@ import java.util.concurrent.*;
 public class ClientSSHHandler implements Command {
 
     private final Logger logger = LoggerFactory.getLogger(ClientSSHHandler.class);
+    private final List<TUITab> tabs = new ArrayList<TUITab>(); // Lista zakładek
     private InputStream in;
     private OutputStream out, errout;
     private ChannelSession session;
@@ -28,6 +34,7 @@ public class ClientSSHHandler implements Command {
     private int ScreenHeight = 800;
     private ExitCallback exitCallback;
     private final BlockingQueue<byte[]> messages = new LinkedBlockingQueue<>();
+    private KeyboardHandler keyboardHandler = new KeyboardHandler();
     private Thread receiverThread, senderThread;
 
     public ClientSSHHandler() {
@@ -48,14 +55,23 @@ public class ClientSSHHandler implements Command {
             tuiScreen.addLayer(1);
             tuiScreen.addLayer(2);
             tuiScreen.addLayer(3);
-            tuiScreen.setBgColor(Colors.BG_BRIGHT_YELLOW.getCode(), 0);
+            tuiScreen.setBgColor(Colors.BG_BRIGHT_WHITE.getCode(), 0);
             TUITab op1 = new TUITab("F1 Main Page", 0, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op1);
             TUITab op2 = new TUITab("F2 Credit calculator", 20, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op2);
             TUITab op3 = new TUITab("F3 Savings calculator", 40, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op3);
             TUITab op4 = new TUITab("F4 Investment calculator", 60, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op4);
             TUITab op5 = new TUITab("F5 Currency converter", 80, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op5);
             TUITab op6 = new TUITab("F6 Tax calculator", 100, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op6);
             TUITab op7 = new TUITab("F7 Pension calculator", 120, 0, ScreenWidth, ScreenHeight, 0, TUIManager);
+            tabs.add(op7);
+
+
 
             TUIManager.addTab(op1);
             TUIManager.addTab(op2);
@@ -250,7 +266,39 @@ public class ClientSSHHandler implements Command {
                 for(int i=0;i < data.length; ++i)
                     intData[i] = data[i] & 0xFF;
 
+                KeyInfo keyInfo = keyboardHandler.getKeyInfo(intData);
+
                 logger.info("Odebrano sekwencję " + Arrays.toString(intData));
+
+
+
+                if(keyInfo != null){
+                    if(keyInfo.getLabel() == KeyLabel.INTERNAL_WIN_RESIZE) {
+                        try {
+                            Map<String, String> env = environment.getEnv();
+                            int height = Integer.parseInt(env.get("LINES"));
+                            int width = Integer.parseInt(env.get("COLUMNS"));
+                            if(width != ScreenWidth || height != ScreenHeight) {
+                                this.ScreenHeight = height;
+                                this.ScreenWidth = width;
+                                TUIManager.resizeUI(this.ScreenWidth, this.ScreenHeight);
+                            }
+                        } catch (NumberFormatException e){
+                            logger.info(e.getLocalizedMessage());
+                        }
+                    } else if (keyInfo.getLabel() == KeyLabel.CTRL_C) {
+                        logger.info("Destroying session");
+                        destroy(session);
+                        break;
+                    } else {
+                        logger.info("Odebrano klawisz " + keyInfo);
+                        TUIManager.handleKeyboardInput(keyInfo,tabs);
+                        //destroy(session);
+                    }
+                }
+                else {
+                    logger.warn("Nieznana sekwencja klawiszy " + Arrays.toString(intData));
+                }
             }
         } catch (InterruptedException e){
             logger.info("Sender thread finished!");
