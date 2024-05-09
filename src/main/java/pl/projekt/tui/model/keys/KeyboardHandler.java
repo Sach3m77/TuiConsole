@@ -1,36 +1,22 @@
 package pl.projekt.tui.model.keys;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-
-
-/**
- * Klasa mapująca <i>KeyInfo</i> na sekwencje bajtów.
- */
+@Slf4j
 public class KeyboardHandler {
-
-    // Logger for debugging and trace information
-    private static final Logger logger = LoggerFactory.getLogger(KeyboardHandler.class);
-
-    // Map to hold key codes and corresponding KeyInfo
     private final Map<String, KeyInfo> keys = new HashMap<>();
-
-    /**
-     * Domyślny konstruktor. Wywołuje metodę initKeys();
-     */
     public KeyboardHandler() {
         initKeys();
     }
 
-    /**
-     * Metoda inicjująca mapę klawiszy.
-     */
+    private void addKey(KeyInfo info, int... keyCodes) {
+        keys.put(convertArrayToString(keyCodes), info);
+    }
+
     public void initKeys() {
         addKey(new KeyInfo(KeyLabel.CTRL_C), 3);
         addKey(new KeyInfo(KeyLabel.ARROW_UP), 27, 91, 65);
@@ -49,49 +35,43 @@ public class KeyboardHandler {
         addKey(new KeyInfo(KeyLabel.F10), 27, 91, 50, 49, 126);
         addKey(new KeyInfo(KeyLabel.F11), 27, 91, 50, 51, 126);
         addKey(new KeyInfo(KeyLabel.F12), 27, 91, 50, 52, 126);
+        addKey(new KeyInfo("0", KeyLabel.DIGIT_0), 48);
+        addKey(new KeyInfo("1", KeyLabel.DIGIT_1), 49);
+        addKey(new KeyInfo("2", KeyLabel.DIGIT_2), 50);
+        addKey(new KeyInfo("3", KeyLabel.DIGIT_3), 51);
+        addKey(new KeyInfo("4", KeyLabel.DIGIT_4), 52);
+        addKey(new KeyInfo("5", KeyLabel.DIGIT_5), 53);
+        addKey(new KeyInfo("6", KeyLabel.DIGIT_6), 54);
+        addKey(new KeyInfo("7", KeyLabel.DIGIT_7), 55);
+        addKey(new KeyInfo("8", KeyLabel.DIGIT_8), 56);
+        addKey(new KeyInfo("9", KeyLabel.DIGIT_9), 57);
+        addKey(new KeyInfo(",", KeyLabel.COMMA), 44);
+        addKey(new KeyInfo(".", KeyLabel.PERIOD), 46);
         addKey(new KeyInfo(KeyLabel.ENTER), 13, 10);
         addKey(new KeyInfo(KeyLabel.ENTER_ALT), 13);
         addKey(new KeyInfo(KeyLabel.CTRL_C), 3);
         addKey(new KeyInfo(KeyLabel.ESC), 27);
         addKey(new KeyInfo(KeyLabel.ENTER), 13, 10);
+        addKey(new KeyInfo(KeyLabel.DELETE), 127);
         addKey(new KeyInfo(KeyLabel.INTERNAL_WIN_RESIZE), 255,255,0,255,255);
 
     }
 
-    /**
-     * Convert array of key codes to a string key.
-     *
-     * @param arr Array of key codes
-     * @return String representation
-     */
-    private String arrayToKey(int[] arr) {
+    private String convertArrayToString(int[] arr) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < arr.length; i++) {
-            sb.append(arr[i]);
+        int i = 0;
+        for (int num : arr) {
+            sb.append(num);
             if (i < arr.length - 1) {
                 sb.append(",");
             }
+            i++;
         }
         return sb.toString();
     }
 
-    /**
-     * Dodaje nowy klawisz i informacje o nim do mapy.
-     * @param info Obiekt KeyInfo.
-     * @param keyCodes Sekwencje bajtów reprezentujące dany klawisz.
-     */
-    private void addKey(KeyInfo info, int... keyCodes) {
-        keys.put(arrayToKey(keyCodes), info);
-    }
-
-    /**
-     * Pobiera obiekt <i>KeyInfo</i> dla danej sekwencji bajtów.
-     *
-     * @param keyCodes Tablica z sekwencją kodów dla klawisza.
-     * @return Obiekt <i>KeyInfo</i> z odpowiadającym klawiszem lub <i style="color:orange;">null</i> jeśli nie znaleziono.
-     */
     public KeyInfo getKeyInfo(int[] keyCodes) {
-        logger.trace("Searching for key: " + Arrays.toString(keyCodes));
-        return keys.getOrDefault(arrayToKey(keyCodes), null);
+        log.trace("Searching for key: {}", Arrays.toString(keyCodes));
+        return keys.getOrDefault(convertArrayToString(keyCodes), null);
     }
 }

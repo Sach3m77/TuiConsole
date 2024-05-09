@@ -1,120 +1,61 @@
 package pl.projekt.tui.component;
 
-
-
 import pl.projekt.tui.model.color.Colors;
 
-/**
- * Klasa do tworzenia etykiet.
- */
 public class TUILabel implements TUIComponent {
 
-    private String text;
-    private String textColor = Colors.TEXT_BLACK.getCode();
-    private String bgColor;
-    private int x, y, w, h, zIndex;
-    private TUIManager screenManager;
+    private final String text;
+    private final String textColor = Colors.TEXT_BLACK.getCode();
+    private final String backgroundColor;
+    private final int x, y, layerIndex;
+    private int width, height;
+    private final TUIManager screenManager;
 
-    /**
-     * Konstruktor z możliwością ustawienia koloru tekstu.
-     * @param text Tekst do wyświetlenia.
-     * @param x Pozycja x etykiety.
-     * @param y Pozycja y etykiety.
-     * @param zIndex z-index etykiety.
-     * @param textColor Kolor tekstu.
-     * @param bgColor Kolor tła.
-     * @param TUIManager Obiekt <i>UIManager</i>
-     */
-    public TUILabel(String text, int x, int y, int zIndex, String textColor, String bgColor, TUIManager TUIManager){
+    public TUILabel(String text, int x, int y, int layerIndex, String backgroundColor, TUIManager TUIManager){
         this.text = text;
         this.x = x;
         this.y = y;
-        this.zIndex = zIndex;
-        this.textColor = textColor;
-        this.bgColor = bgColor;
-        this.screenManager = TUIManager;
-        countBounds();
-    }
-    /**
-     * Konstruktor z domyślnym kolorem tekstu.
-     * @param text Tekst do wyświetlenia.
-     * @param x Pozycja x etykiety.
-     * @param y Pozycja y etykiety.
-     * @param zIndex z-index etykiety.
-     * @param bgColor Kolor tła.
-     * @param TUIManager Obiekt <i>UIManager</i>
-     */
-    public TUILabel(String text, int x, int y, int zIndex, String bgColor, TUIManager TUIManager){
-        this.text = text;
-        this.x = x;
-        this.y = y;
-        this.zIndex = zIndex;
-        this.bgColor = bgColor;
+        this.layerIndex = layerIndex;
+        this.backgroundColor = backgroundColor;
         this.screenManager = TUIManager;
         countBounds();
     }
 
-    /**
-     * Liczy wymiary tekstu na ekranie z uwzględnieniem enterów.
-     */
     private void countBounds(){
-        h = 1;
+        height = 1;
         int prevIndex = 0;
         for(int i = 0; i < text.length(); i++){
             if(text.charAt(i) == '\n') {
-                h++;
+                height++;
                 int len = text.substring(prevIndex, i).length();
-                if(len > w)
-                    w = len;
+                if(len > width)
+                    width = len;
                 prevIndex = i;
             }
         }
         if(prevIndex == 0)
-            w = text.length();
-    }
-
-    /**
-     * Ustawia tekst etykiety.
-     * @param text Tekst do zmiany.
-     */
-    public void setText(String text){
-        this.text = text;
-        countBounds();
-    }
-
-    public String getText() {
-        return text;
+            width = text.length();
     }
 
     @Override
     public void drawComponent(TUIManager TUIManager) {
         TUIScreen screen = TUIManager.getScreen();
 
-        screen.setText(x,y,text,textColor, bgColor, zIndex);
+        screen.setText(x,y,text,textColor, backgroundColor, layerIndex);
     }
 
     @Override
-    public int getZIndex() {
-        return zIndex;
+    public int getLayerIndex() {
+        return layerIndex;
     }
 
     @Override
-    public boolean isInside(int x, int y) {
-        return false;
-    }
-
-    @Override
-    public void performAction() {
-
-    }
+    public void performAction() {}
 
     @Override
     public void show() {
         screenManager.addComponent(this);
     }
-
-    @Override
-    public void hide() {screenManager.removeComponent(this);}
 
     @Override
     public int getX() {
@@ -128,33 +69,27 @@ public class TUILabel implements TUIComponent {
 
     @Override
     public int getWidth() {
-        return w;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return h;
+        return height;
     }
 
     @Override
-    public void setActive(boolean active) {
-
-    }
+    public void setActive(boolean active) {}
 
     @Override
-    public boolean isActive() {
+    public boolean isComponentActive() {
         return false;
     }
 
     @Override
-    public void highlight() {
-
-    }
+    public void highlightComponent() {}
 
     @Override
-    public void resetHighlight() {
-
-    }
+    public void resetHighlightComponent() {}
 
     @Override
     public boolean isInteractable() {
@@ -162,8 +97,6 @@ public class TUILabel implements TUIComponent {
     }
 
     @Override
-    public void windowResized(int width, int height){
-
-    }
+    public void windowResized(int width, int height){}
 
 }

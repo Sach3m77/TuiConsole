@@ -36,12 +36,40 @@ public enum KeyLabel {
     F11,
     /** F12 */
     F12,
+    /** 0 */
+    DIGIT_0,
+    /** 1 */
+    DIGIT_1,
+    /** 2 */
+    DIGIT_2,
+    /** 3 */
+    DIGIT_3,
+    /** 4 */
+    DIGIT_4,
+    /** 5 */
+    DIGIT_5,
+    /** 6 */
+    DIGIT_6,
+    /** 7 */
+    DIGIT_7,
+    /** 8 */
+    DIGIT_8,
+    /** 9 */
+    DIGIT_9,
+    /** , */
+    COMMA,
+    /** . */
+    PERIOD,
+
     /** Enter */
     ENTER,
     /** Enter alternatywny. */
     ENTER_ALT,
     /** CTRL + C */
     CTRL_C,
+
+    /** DEL */
+    DELETE,
     /** ESC */
     ESC,
     /** Nieznany klawisz */

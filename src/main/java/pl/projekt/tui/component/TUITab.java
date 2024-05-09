@@ -1,101 +1,70 @@
 package pl.projekt.tui.component;
 
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import pl.projekt.tui.model.color.Colors;
+import pl.projekt.tui.model.keys.KeyInfo;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Klasa implementująca karty w postaci TUI.
- */
+@Slf4j
 public class TUITab implements TUIComponent {
 
-    Logger logger = LoggerFactory.getLogger(TUITab.class);
-    private String title;
+    private final String title;
     private String textColor = Colors.TEXT_BLACK.getCode();
-    private String bgColor = Colors.BG_BRIGHT_WHITE.getCode();
+    private final String backgroundColor = Colors.BG_BRIGHT_WHITE.getCode();
+    private final String tabColor = "\033[33m";
+    private final List<TUIComponent> components = new ArrayList<>();
+    private final int x, y;
+    private int width, height, currentActiveComponent = -1;
 
-    private String tabColor = "\033[33m";
-    private List<TUIComponent> components = new ArrayList<>();
-    private int x, y;
-    private int w, h, zIndex, currentActiveComponent = -1;
+    private final int layerIndex;
     private final TUIManager TUIManager;
-    boolean active;
+    boolean isActive;
 
-    /**
-     * Domyślny konstruktor.
-     * @param title Tytuł karty, który będzie wyświetlany na liście kart.
-     * @param x Pozycja x karty (tytułu).
-     * @param y Pozycja y karty (tytułu)
-     * @param windowWidth Szerokość okna.
-     * @param windowHeight Wysokość okna.
-     * @param zIndex z-index.
-     * @param TUIManager Obiekt UIManager, z którym współpracować będzie karta.
-     */
-    public TUITab(String title, int x, int y, int windowWidth, int windowHeight, int zIndex, TUIManager TUIManager) {
+    public TUITab(String title, int x, int y, int windowWidth, int windowHeight, int layerIndex, TUIManager TUIManager) {
         this.x = x;
         this.y = y;
-        this.w = windowWidth;
-        this.h = windowHeight;
-        this.zIndex = zIndex;
+        this.width = windowWidth;
+        this.height = windowHeight;
+        this.layerIndex = layerIndex;
         this.TUIManager = TUIManager;
         this.title = title;
-        this.active = false;
+        this.isActive = false;
     }
 
     @Override
     public void drawComponent(TUIManager TUIManager) {
-        if (active) {
-            for (int i = 0; i < w; ++i)
-                for (int j = y + 1; j < h; ++j) {
-                    TUIScreenCell emptyCell = new TUIScreenCell(' ', textColor, bgColor);
-                    TUIManager.getScreen().addPixelToLayer(i, j, zIndex, emptyCell);
+        if (isActive) {
+            for (int i = 0; i < width; ++i)
+                for (int j = y + 1; j < height; ++j) {
+                    TUIScreenCell emptyCell = new TUIScreenCell(' ', textColor, backgroundColor);
+                    TUIManager.getScreen().addPixelToLayer(i, j, layerIndex, emptyCell);
                 }
         }
-        TUIManager.getScreen().addPixelToLayer(x, y, zIndex, new TUIScreenCell(' ', textColor, tabColor));
-        TUIManager.getScreen().addPixelToLayer(x + 1, y, zIndex, new TUIScreenCell(' ', textColor, tabColor));
+        TUIManager.getScreen().addPixelToLayer(x, y, layerIndex, new TUIScreenCell(' ', textColor, tabColor));
+        TUIManager.getScreen().addPixelToLayer(x + 1, y, layerIndex, new TUIScreenCell(' ', textColor, tabColor));
 
         for (int i = 0; i < title.length(); ++i) {
-            TUIManager.getScreen().addPixelToLayer(x + 2 + i, y, zIndex, new TUIScreenCell(title.charAt(i), textColor, tabColor));
+            TUIManager.getScreen().addPixelToLayer(x + 2 + i, y, layerIndex, new TUIScreenCell(title.charAt(i), textColor, tabColor));
         }
-        TUIManager.getScreen().addPixelToLayer(x + title.length() + 2, y, zIndex, new TUIScreenCell(' ', textColor, tabColor));
-        TUIManager.getScreen().addPixelToLayer(x + title.length() + 3, y, zIndex, new TUIScreenCell(' ', textColor, tabColor));
-        if (active) {
+        TUIManager.getScreen().addPixelToLayer(x + title.length() + 2, y, layerIndex, new TUIScreenCell(' ', textColor, tabColor));
+        TUIManager.getScreen().addPixelToLayer(x + title.length() + 3, y, layerIndex, new TUIScreenCell(' ', textColor, tabColor));
+        if (isActive) {
             for (TUIComponent component : components)
                 component.drawComponent(TUIManager);
         }
     }
 
-    /**
-     * Pozwala na dodanie komponentu do karty.
-     * @param component Komponent. który ma zostać dodany.
-     */
     public void addComponent(TUIComponent component) {
-        logger.debug("Adding UI component " + component.getClass().getSimpleName());
+        log.debug("Adding UI component " + component.getClass().getSimpleName());
         components.add(component);
     }
 
-    /**
-     * Pozwala na usunięcie komponentu z karty.
-     * @param component Komponent, który ma zostać usunięty.
-     */
-    public void removeComponent(TUIComponent component) {
-        logger.debug("Removing UI component " + component.getClass().getSimpleName());
-        components.remove(component);
-    }
-
     @Override
-    public int getZIndex() {
-        return zIndex;
-    }
-
-    @Override
-    public boolean isInside(int mouseX, int mouseY) {
-        return mouseX >= x && mouseX <= (x + w) && mouseY >= y && mouseY <= (y + h);
+    public int getLayerIndex() {
+        return layerIndex;
     }
 
     @Override
@@ -111,13 +80,6 @@ public class TUITab implements TUIComponent {
     }
 
     @Override
-    public void hide() {
-        if (TUIManager != null) {
-            TUIManager.removeComponent(this);
-        }
-    }
-
-    @Override
     public int getX() {
         return x;
     }
@@ -129,39 +91,38 @@ public class TUITab implements TUIComponent {
 
     @Override
     public int getWidth() {
-        return h;
+        return width;
     }
 
     @Override
     public int getHeight() {
-        return w;
+        return height;
     }
 
     @Override
     public void setActive(boolean active) {
 
-        this.active = active;
-        if (active) highlight();
-        else resetHighlight();
+        this.isActive = active;
+        if (active) highlightComponent();
+        else resetHighlightComponent();
     }
 
     @Override
-    public boolean isActive() {
-        return active;
+    public boolean isComponentActive() {
+        return isActive;
     }
 
     @Override
-    public void highlight() {
+    public void highlightComponent() {
         textColor = Colors.TEXT_RED.getCode();
-        active = true;
+        isActive = true;
 
         TUIManager.refresh();
-
     }
     @Override
-    public void resetHighlight() {
+    public void resetHighlightComponent() {
         textColor = Colors.TEXT_BLACK.getCode();
-        active = false;
+        isActive = false;
 
         TUIManager.refresh();
     }
@@ -171,30 +132,37 @@ public class TUITab implements TUIComponent {
         return true;
     }
 
+    @Override
+    public void windowResized(int width, int height){
+        this.width = width;
+        this.height = height;
+        for(TUIComponent component : components)
+            component.windowResized(width, height);
+    }
 
     private void highlightActiveComponent() {
-        logger.trace("Highlighting active component.");
+        log.info("Highlighting active component.");
         for (TUIComponent component : components) {
-            if (component.isActive()) {
-                component.highlight();
+            if (component.isComponentActive()) {
+                component.highlightComponent();
             } else {
-                component.resetHighlight();
+                component.resetHighlightComponent();
             }
         }
     }
 
     private void moveToNextActiveComponent() {
         if (components.isEmpty()) {
-            logger.trace("No components to activate.");
+            log.info("No components to activate.");
             return;
         }
 
         if (currentActiveComponent != -1) {
             components.get(currentActiveComponent).setActive(false);
-            logger.trace("Deactivating current active component.");
+            log.info("Deactivating current active component.");
         }
         int startComponent = currentActiveComponent == -1 ? (components.size() - 1) : currentActiveComponent;
-        logger.trace("Starting from: " + startComponent);
+        log.info("Starting from: " + startComponent);
         do {
             currentActiveComponent = (currentActiveComponent + 1) % components.size();
         } while (!components.get(currentActiveComponent).isInteractable() && currentActiveComponent != startComponent);
@@ -204,13 +172,13 @@ public class TUITab implements TUIComponent {
 
     private void moveToPrevActiveComponent() {
         if (components.isEmpty()) {
-            logger.trace("No components to activate.");
+            log.info("No components to activate.");
             return;
         }
 
         if (currentActiveComponent != -1) {
             components.get(currentActiveComponent).setActive(false);
-            logger.trace("Deactivating current active component.");
+            log.info("Deactivating current active component.");
         }
         int startComponent = currentActiveComponent == -1 ? 0 : currentActiveComponent;
         do {
@@ -222,13 +190,30 @@ public class TUITab implements TUIComponent {
         components.get(currentActiveComponent).setActive(true);
     }
 
-    @Override
-    public void windowResized(int width, int height){
-        this.w = width;
-        this.h = height;
-        for(TUIComponent component : components)
-            component.windowResized(width, height);
-    }
+    public void handleKeyboardInput(KeyInfo keyInfo) {
 
+            switch (keyInfo.getLabel()) {
+                case ARROW_DOWN:
+                    moveToNextActiveComponent();
+                    break;
+                case ARROW_UP:
+                    moveToPrevActiveComponent();
+                    break;
+                case ENTER, ENTER_ALT:
+                    if (currentActiveComponent != -1)
+                        components.get(currentActiveComponent).performAction();
+                    break;
+                default:
+                    if (isActive && currentActiveComponent != -1) {
+                        log.info("Is adding a value to field");
+                        if (components.get(currentActiveComponent) instanceof TUITextField activeField)
+                            activeField.addText(keyInfo);
+                    }
+                    break;
+
+        }
+
+        highlightActiveComponent();
+    }
 
 }

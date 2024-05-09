@@ -143,9 +143,6 @@ public enum Colors {
      */
     RESET("\033[0m");
 
-    /**
-     * Reprezentuje kolor.
-     */
     private final String code;
 
     /**
@@ -156,11 +153,4 @@ public enum Colors {
         this.code = code;
     }
 
-    /**
-     * Pozwala na odczytanie kodu koloru.
-     * @return Kod koloru w postaci String.
-     */
-    public String getCode() {
-        return code;
-    }
 }

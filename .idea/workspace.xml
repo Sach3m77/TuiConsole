@@ -4,11 +4,30 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3b7e6e6e-9821-4f23-bb02-9c4be2a8cd78" name="Changes" comment="">
+    <list default="true" id="3dd5befb-0912-4182-a6bf-3a062cdb8c47" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITextField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth.json" beforeDir="false" afterPath="$PROJECT_DIR$/auth.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIBorder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUILabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUILabel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScreenCell.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScreenCell.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUIScrollBar.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITab.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITab.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/component/TUITabela.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/logic/ProcessListUpdater.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/color/Colors.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/color/Colors.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/keys/KeyInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/keys/KeyInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/keys/KeyLabel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/keys/KeyLabel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/keys/KeyboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/model/keys/KeyboardHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHShellFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ClientSSHShellFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ServerSSH.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/pl/projekt/tui/ssh/ServerSSH.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,7 +38,6 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
       </list>
     </option>
   </component>
@@ -29,37 +47,53 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 0
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2fg3eGiPSCsVFeSyLIDLpNubMXB" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2fxT3CcIzJL5RkkrLw4989Qr9vq" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;Application.MySSHServer.executor&quot;: &quot;Run&quot;,
     &quot;Application.ServerSSH.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Start SSH Server.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;wiktor&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;D:/IntelliJ/Projects/projekt/src/main/java/pl/projekt/Main.java&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="Start SSH Server" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="pl.projekt.tui.ssh.ServerSSH" />
+      <module name="projekt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="TuiConsole" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="TuiConsole" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -70,32 +104,23 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="3b7e6e6e-9821-4f23-bb02-9c4be2a8cd78" name="Changes" comment="" />
-      <created>1714208989619</created>
+      <changelist id="3dd5befb-0912-4182-a6bf-3a062cdb8c47" name="Changes" comment="" />
+      <created>1714741527673</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1714208989619</updated>
-      <workItem from="1714208990681" duration="19345000" />
-      <workItem from="1714302075436" duration="11324000" />
-      <workItem from="1714378663581" duration="2310000" />
-      <workItem from="1714383944853" duration="10377000" />
-      <workItem from="1714564228641" duration="14666000" />
-      <workItem from="1714628160057" duration="5881000" />
+      <updated>1714741527673</updated>
+      <workItem from="1714741528696" duration="9191000" />
+      <workItem from="1714840685742" duration="4776000" />
+      <workItem from="1714889283340" duration="42000" />
+      <workItem from="1714914401435" duration="5457000" />
+      <workItem from="1714923381835" duration="3172000" />
+      <workItem from="1715183789220" duration="1220000" />
+      <workItem from="1715186104069" duration="361000" />
+      <workItem from="1715268519868" duration="932000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>
